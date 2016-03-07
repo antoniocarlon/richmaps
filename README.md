@@ -84,7 +84,9 @@ mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new Lat
 [[https://github.com/antoniocarlon/richmaps/blob/master/example.jpg]]
 
 ### Limitations
-For now, rotate and tilt gestures must be disabled to avoid undesired behaviour (this will change in future implementations).
+- For now, rotate and tilt gestures must be disabled to avoid undesired behaviour (this will change in future implementations).
+- Entities are not clickable
+- Drawing is not geodesic
 
 ### Future work
 Improve drawing to allow rotate and tilt gestures.
