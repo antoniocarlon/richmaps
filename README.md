@@ -80,6 +80,10 @@ richLayer.removeShape(polyline2); // This RichPolyline will not be drawn as it i
 mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(40.22905, -3.95389), 18, 0, 0)));
 ```
 
+## Example
+
+[[https://github.com/antoniocarlon/richmaps/blob/master/example.jpg|alt=example]]
+
 ### Limitations
 For now, rotate and tilt gestures must be disabled to avoid undesired behaviour (this will change in future implementations).
 
