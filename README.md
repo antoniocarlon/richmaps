@@ -5,6 +5,8 @@ Advanced rendering options for polygons and polylines on Google Maps Android API
 ### Current version
 v0.2.0
 
+ - Now the map can be rotated (bearing)
+
 ### Objectives
  - Improve the GoogleMaps Android API v2 rendering options for Polygons and Polylines
 
