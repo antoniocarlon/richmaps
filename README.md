@@ -3,7 +3,7 @@
 Advanced rendering options for polygons and polylines on Google Maps Android API v2
 
 ### Current version
-v0.1.0
+v0.2.0
 
 ### Objectives
  - Improve the GoogleMaps Android API v2 rendering options for Polygons and Polylines
@@ -16,7 +16,9 @@ v0.1.0
 // ...
 
 // Create a new RichLayer tied to a map
-RichLayer richLayer = new RichLayer.Builder(mMap).zIndex(0).build(); // zIndex represents the position of the RichLayer on the map
+RichLayer richLayer = richLayer = new RichLayer.Builder(mMapView, mMap).zIndex(0).build(); // zIndex represents the position of the RichLayer on the map
+                                                                                           // mMapView represents the View objects that holds the map
+                                                                                           // mMap represents a GoogleMap object
 
 // ...
 
@@ -84,12 +86,12 @@ mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new Lat
 ```
 
 ### Limitations
-- For now, rotate and tilt gestures must be disabled to avoid undesired behaviour (this will change in future implementations).
+- For now, tilt gestures must be disabled to avoid undesired behaviour (this will change in future implementations).
 - Entities are not clickable
 - Drawing is not geodesic
 
 ### Future work
-Improve drawing to allow rotate and tilt gestures.
+Improve drawing to allow tilt gestures.
 
 ### License
 Copyright 2015 ANTONIO CARLON
