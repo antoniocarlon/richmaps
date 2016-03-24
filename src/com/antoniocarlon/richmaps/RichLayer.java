@@ -49,8 +49,8 @@ public class RichLayer {
     private Bitmap bitmap;
 
     private RichLayer(View view, GoogleMap map, float zIndex) {
-        if (map == null) {
-            throw new IllegalArgumentException("GoogleMap cannot be null");
+        if (view == null || map == null) {
+            throw new IllegalArgumentException("View and GoogleMap cannot be null");
         }
 
         this.view = view;
