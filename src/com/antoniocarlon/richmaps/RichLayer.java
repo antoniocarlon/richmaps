@@ -123,7 +123,6 @@ public class RichLayer {
     }
 
     private Bitmap draw(Bitmap bitmap, Projection projection) {
-        new Canvas(bitmap).drawColor(Color.argb(100, 0, 100, 0));
         Set<Integer> zIndices = shapes.keySet();
         for (Integer zIndex : zIndices) {
             draw(bitmap, projection, shapes.get(zIndex));
