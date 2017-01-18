@@ -3,9 +3,10 @@
 Advanced rendering options for polygons and polylines on Google Maps Android API v2
 
 ### Current version
-v0.2.0
+v0.3.0
 
  - Now the map can be rotated (bearing)
+ - The shapes take top/bottom map padding into account
 
 ### Objectives
  - Improve the GoogleMaps Android API v2 rendering options for Polygons and Polylines
@@ -87,12 +88,23 @@ richLayer.removeShape(polyline2); // This RichPolyline will not be drawn as it i
 mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(40.22905, -3.95389), 18, 0, 0)));
 ```
 
+### Padding
+If the map is padded (top or bottom), you will need to also set the padding to the `RichLayer` when building it:
+```
+richLayer = new RichLayer.Builder(mMapView, googleMap)
+                .zIndex(0)
+                .padding(100, 200) // 100px padding top and 200px padding bottom
+                .build();
+```
+
 ### Limitations
+- Padding can only be set for top/bottom but not for left/right
 - For now, tilt gestures must be disabled to avoid undesired behaviour (this will change in future implementations).
 - Entities are not clickable
 - Drawing is not geodesic
 
 ### Future work
+Improve padding options to allow left/right padding.
 Improve drawing to allow tilt gestures.
 
 ### License
