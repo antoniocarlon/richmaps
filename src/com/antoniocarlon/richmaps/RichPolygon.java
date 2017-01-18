@@ -43,22 +43,22 @@ public class RichPolygon extends RichPolyline {
     private Integer fillColor = Color.WHITE;
     private List<List<RichPoint>> holes = new ArrayList<>();
 
-    RichPolygon(int zIndex,
-                List<RichPoint> points,
-                List<List<RichPoint>> holes,
-                int strokeWidth,
-                Paint.Cap strokeCap,
-                Paint.Join strokeJoin,
-                PathEffect pathEffect,
-                MaskFilter maskFilter,
-                boolean linearGradient,
-                Integer strokeColor,
-                boolean antialias,
-                boolean closed,
-                Shader strokeShader,
-                Shader fillShader,
-                Paint.Style style,
-                Integer fillColor) {
+    RichPolygon(final int zIndex,
+                final List<RichPoint> points,
+                final List<List<RichPoint>> holes,
+                final int strokeWidth,
+                final Paint.Cap strokeCap,
+                final Paint.Join strokeJoin,
+                final PathEffect pathEffect,
+                final MaskFilter maskFilter,
+                final boolean linearGradient,
+                final Integer strokeColor,
+                final boolean antialias,
+                final boolean closed,
+                final Shader strokeShader,
+                final Shader fillShader,
+                final Paint.Style style,
+                final Integer fillColor) {
         super(zIndex, points, strokeWidth, strokeCap, strokeJoin, pathEffect, maskFilter,
                 strokeShader, linearGradient, strokeColor, antialias, closed);
         this.fillShader = fillShader;
@@ -70,23 +70,29 @@ public class RichPolygon extends RichPolyline {
     }
 
     @Override
-    public void doDraw(final Bitmap bitmap, final Projection projection) {
+    public void doDraw(final Bitmap bitmap, final Projection projection,
+                       final int paddingLeft, final int paddingTop,
+                       final int paddingRight, final int paddingBottom) {
         if (style == Paint.Style.FILL || style == Paint.Style.FILL_AND_STROKE) {
-            drawFill(bitmap, projection, points);
+            drawFill(bitmap, projection, points,
+                    paddingLeft, paddingTop, paddingRight, paddingBottom);
             for (List<RichPoint> hole : holes) {
-                drawHole(bitmap, projection, hole);
+                drawHole(bitmap, projection, hole,
+                        paddingLeft, paddingTop, paddingRight, paddingBottom);
             }
         }
 
         if (style == Paint.Style.STROKE || style == Paint.Style.FILL_AND_STROKE) {
-            drawStroke(bitmap, projection, points);
+            drawStroke(bitmap, projection, points,
+                    paddingLeft, paddingTop, paddingRight, paddingBottom);
             for (List<RichPoint> hole : holes) {
-                drawStroke(bitmap, projection, hole);
+                drawStroke(bitmap, projection, hole,
+                        paddingLeft, paddingTop, paddingRight, paddingBottom);
             }
         }
     }
 
-    public void addHoles(List<List<RichPoint>> holes) {
+    public void addHoles(final List<List<RichPoint>> holes) {
         if (holes != null) {
             for (List<RichPoint> hole : holes) {
                 addHole(hole);
@@ -94,14 +100,16 @@ public class RichPolygon extends RichPolyline {
         }
     }
 
-    public void addHole(List<RichPoint> hole) {
+    public void addHole(final List<RichPoint> hole) {
         if (hole != null) {
             holes.add(hole);
         }
     }
 
     protected void drawFill(final Bitmap bitmap, final Projection projection,
-                            final List<RichPoint> points2Draw) {
+                            final List<RichPoint> points2Draw,
+                            final int paddingLeft, final int paddingTop,
+                            final int paddingRight, final int paddingBottom) {
         Canvas canvas = new Canvas(bitmap);
         Path linePath = new Path();
         boolean firstPoint = true;
@@ -109,11 +117,14 @@ public class RichPolygon extends RichPolyline {
             LatLng position = point.getPosition();
             if (position != null) {
                 Point bmpPoint = projection.toScreenLocation(position);
+                int bmpPointX = bmpPoint.x;
+                int bmpPointY = bmpPoint.y + paddingBottom / 2 - paddingTop / 2;
+
                 if (firstPoint) {
-                    linePath.moveTo(bmpPoint.x, bmpPoint.y);
+                    linePath.moveTo(bmpPointX, bmpPointY);
                     firstPoint = false;
                 } else {
-                    linePath.lineTo(bmpPoint.x, bmpPoint.y);
+                    linePath.lineTo(bmpPointX, bmpPointY);
                 }
             }
         }
@@ -126,7 +137,9 @@ public class RichPolygon extends RichPolyline {
     }
 
     protected void drawHole(final Bitmap bitmap, final Projection projection,
-                            final List<RichPoint> points2Draw) {
+                            final List<RichPoint> points2Draw,
+                            final int paddingLeft, final int paddingTop,
+                            final int paddingRight, final int paddingBottom) {
         Canvas canvas = new Canvas(bitmap);
         Path linePath = new Path();
         boolean firstPoint = true;
@@ -134,11 +147,14 @@ public class RichPolygon extends RichPolyline {
             LatLng position = point.getPosition();
             if (position != null) {
                 Point bmpPoint = projection.toScreenLocation(position);
+                int bmpPointX = bmpPoint.x;
+                int bmpPointY = bmpPoint.y + paddingBottom / 2 - paddingTop / 2;
+
                 if (firstPoint) {
-                    linePath.moveTo(bmpPoint.x, bmpPoint.y);
+                    linePath.moveTo(bmpPointX, bmpPointY);
                     firstPoint = false;
                 } else {
-                    linePath.lineTo(bmpPoint.x, bmpPoint.y);
+                    linePath.lineTo(bmpPointX, bmpPointY);
                 }
             }
         }

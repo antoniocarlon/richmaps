@@ -17,7 +17,6 @@
 package com.antoniocarlon.richmaps;
 
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.View;
 
@@ -47,8 +46,14 @@ public class RichLayer {
     private GroundOverlay overlay;
     private SortedMap<Integer, List<RichShape>> shapes = new TreeMap<>();
     private Bitmap bitmap;
+    private int paddingLeft;
+    private int paddingTop;
+    private int paddingRight;
+    private int paddingBottom;
 
-    private RichLayer(View view, GoogleMap map, float zIndex) {
+    private RichLayer(final View view, final GoogleMap map, final float zIndex,
+                      final int paddingLeft, final int paddingTop,
+                      final int paddingRight, final int paddingBottom) {
         if (view == null || map == null) {
             throw new IllegalArgumentException("View and GoogleMap cannot be null");
         }
@@ -56,6 +61,10 @@ public class RichLayer {
         this.view = view;
         this.map = map;
         this.zIndex = zIndex;
+        this.paddingLeft = paddingLeft;
+        this.paddingTop = paddingTop;
+        this.paddingRight = paddingRight;
+        this.paddingBottom = paddingBottom;
 
         map.getUiSettings().setTiltGesturesEnabled(false); // For now, tilt gestures are not allowed when using RichLayer
     }
@@ -93,7 +102,7 @@ public class RichLayer {
         }
     }
 
-    public void addShape(RichShape shape) {
+    public void addShape(final RichShape shape) {
         if (shape != null) {
             if (!shapes.containsKey(shape.getZIndex())) {
                 shapes.put(shape.getZIndex(), new ArrayList<RichShape>());
@@ -104,7 +113,7 @@ public class RichLayer {
         }
     }
 
-    public void removeShape(RichShape shape) {
+    public void removeShape(final RichShape shape) {
         if (shape != null) {
             Set<Integer> zIndices = shapes.keySet();
             for (Integer zIndex : zIndices) {
@@ -115,14 +124,15 @@ public class RichLayer {
     }
 
     private void prepareBitmap() {
-        if (bitmap == null || bitmap.getWidth() != view.getWidth() || bitmap.getHeight() != view.getHeight()) {
+        if (bitmap == null || bitmap.getWidth() != view.getWidth()
+                || bitmap.getHeight() != view.getHeight()) {
             bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
         } else {
             bitmap.eraseColor(Color.TRANSPARENT);
         }
     }
 
-    private Bitmap draw(Bitmap bitmap, Projection projection) {
+    private Bitmap draw(final Bitmap bitmap, final Projection projection) {
         Set<Integer> zIndices = shapes.keySet();
         for (Integer zIndex : zIndices) {
             draw(bitmap, projection, shapes.get(zIndex));
@@ -131,9 +141,10 @@ public class RichLayer {
         return bitmap;
     }
 
-    private Bitmap draw(Bitmap bitmap, Projection projection, List<RichShape> shapes) {
+    private Bitmap draw(final Bitmap bitmap, final Projection projection,
+                        final List<RichShape> shapes) {
         for (RichShape shape : shapes) {
-            shape.draw(bitmap, projection);
+            shape.draw(bitmap, projection, paddingLeft, paddingTop, paddingRight, paddingBottom);
         }
         return bitmap;
     }
@@ -141,20 +152,31 @@ public class RichLayer {
     public static class Builder {
         private View view;
         private GoogleMap map;
-        private float zIndex;
+        private float zIndex = 0;
+        private int paddingLeft = 0;
+        private int paddingTop = 0;
+        private int paddingRight = 0;
+        private int paddingBottom = 0;
 
-        public Builder(View view, GoogleMap map) {
+        public Builder(final View view, final GoogleMap map) {
             this.view = view;
             this.map = map;
         }
 
-        public Builder zIndex(float zIndex) {
+        public Builder zIndex(final float zIndex) {
             this.zIndex = zIndex;
             return this;
         }
 
+        public Builder padding(final int top, final int bottom) {
+            this.paddingTop = top;
+            this.paddingBottom = bottom;
+            return this;
+        }
+
         public RichLayer build() {
-            return new RichLayer(view, map, zIndex);
+            return new RichLayer(view, map, zIndex,
+                    paddingLeft, paddingTop, paddingRight, paddingBottom);
         }
     }
 }

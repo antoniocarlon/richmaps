@@ -42,18 +42,18 @@ public class RichPolylineOptions {
     private boolean antialias = true;
     private boolean closed = false;
 
-    public RichPolylineOptions(List<RichPoint> newPoints) {
+    public RichPolylineOptions(final List<RichPoint> newPoints) {
         add(newPoints);
     }
 
-    public RichPolylineOptions add(RichPoint newPoint) {
+    public RichPolylineOptions add(final RichPoint newPoint) {
         if (newPoint != null) {
             points.add(newPoint);
         }
         return this;
     }
 
-    public RichPolylineOptions add(List<RichPoint> newPoints) {
+    public RichPolylineOptions add(final List<RichPoint> newPoints) {
         if (newPoints != null) {
             for (RichPoint newPoint : newPoints) {
                 add(newPoint);
@@ -62,57 +62,57 @@ public class RichPolylineOptions {
         return this;
     }
 
-    public RichPolylineOptions zIndex(int zIndex) {
+    public RichPolylineOptions zIndex(final int zIndex) {
         this.zIndex = zIndex;
         return this;
     }
 
-    public RichPolylineOptions strokeWidth(int strokeWidth) {
+    public RichPolylineOptions strokeWidth(final int strokeWidth) {
         this.strokeWidth = strokeWidth;
         return this;
     }
 
-    public RichPolylineOptions strokeCap(Paint.Cap strokeCap) {
+    public RichPolylineOptions strokeCap(final Paint.Cap strokeCap) {
         this.strokeCap = strokeCap;
         return this;
     }
 
-    public RichPolylineOptions strokeJoin(Paint.Join strokeJoin) {
+    public RichPolylineOptions strokeJoin(final Paint.Join strokeJoin) {
         this.strokeJoin = strokeJoin;
         return this;
     }
 
-    public RichPolylineOptions pathEffect(PathEffect pathEffect) {
+    public RichPolylineOptions pathEffect(final PathEffect pathEffect) {
         this.pathEffect = pathEffect;
         return this;
     }
 
-    public RichPolylineOptions maskFilter(MaskFilter maskFilter) {
+    public RichPolylineOptions maskFilter(final MaskFilter maskFilter) {
         this.maskFilter = maskFilter;
         return this;
     }
 
-    public RichPolylineOptions strokeShader(Shader strokeShader) {
+    public RichPolylineOptions strokeShader(final Shader strokeShader) {
         this.strokeShader = strokeShader;
         return this;
     }
 
-    public RichPolylineOptions linearGradient(boolean linearGradient) {
+    public RichPolylineOptions linearGradient(final boolean linearGradient) {
         this.linearGradient = linearGradient;
         return this;
     }
 
-    public RichPolylineOptions strokeColor(Integer strokeColor) {
+    public RichPolylineOptions strokeColor(final Integer strokeColor) {
         this.strokeColor = strokeColor;
         return this;
     }
 
-    public RichPolylineOptions antialias(boolean antialias) {
+    public RichPolylineOptions antialias(final boolean antialias) {
         this.antialias = antialias;
         return this;
     }
 
-    public RichPolylineOptions closed(boolean closed) {
+    public RichPolylineOptions closed(final boolean closed) {
         this.closed = closed;
         return this;
     }

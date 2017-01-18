@@ -34,29 +34,33 @@ import java.util.List;
  * Represents a polyline to be drawn using rich symbology.
  */
 public class RichPolyline extends RichShape {
-    RichPolyline(int zIndex,
-                 List<RichPoint> points,
-                 int strokeWidth,
-                 Paint.Cap strokeCap,
-                 Paint.Join strokeJoin,
-                 PathEffect pathEffect,
-                 MaskFilter maskFilter,
-                 Shader strokeShader,
-                 boolean linearGradient,
-                 Integer strokeColor,
-                 boolean antialias,
-                 boolean closed) {
+    RichPolyline(final int zIndex,
+                 final List<RichPoint> points,
+                 final int strokeWidth,
+                 final Paint.Cap strokeCap,
+                 final Paint.Join strokeJoin,
+                 final PathEffect pathEffect,
+                 final MaskFilter maskFilter,
+                 final Shader strokeShader,
+                 final boolean linearGradient,
+                 final Integer strokeColor,
+                 final boolean antialias,
+                 final boolean closed) {
         super(zIndex, points, strokeWidth, strokeCap, strokeJoin, pathEffect, maskFilter,
                 strokeShader, linearGradient, strokeColor, antialias, closed);
     }
 
     @Override
-    public void doDraw(final Bitmap bitmap, final Projection projection) {
-        drawStroke(bitmap, projection, points);
+    public void doDraw(final Bitmap bitmap, final Projection projection,
+                       final int paddingLeft, final int paddingTop,
+                       final int paddingRight, final int paddingBottom) {
+        drawStroke(bitmap, projection, points, paddingLeft, paddingTop, paddingRight, paddingBottom);
     }
 
     protected void drawStroke(final Bitmap bitmap, final Projection projection,
-                              final List<RichPoint> points2Draw) {
+                              final List<RichPoint> points2Draw,
+                              final int paddingLeft, final int paddingTop,
+                              final int paddingRight, final int paddingBottom) {
         Canvas canvas = new Canvas(bitmap);
         Paint paint = getDefaultStrokePaint();
 
@@ -77,27 +81,35 @@ public class RichPolyline extends RichShape {
                 }
 
                 if (lastPoint != null) {
-                    drawSegment(canvas, paint, projection, lastPoint, point);
+                    drawSegment(canvas, paint, projection, lastPoint, point,
+                            paddingLeft, paddingTop, paddingRight, paddingBottom);
                 }
                 lastPoint = point;
             }
         }
 
         if (closed && firstPoint != null && lastPoint != null) {
-            drawSegment(canvas, paint, projection, lastPoint, firstPoint);
+            drawSegment(canvas, paint, projection, lastPoint, firstPoint,
+                    paddingLeft, paddingTop, paddingRight, paddingBottom);
         }
     }
 
     private void drawSegment(final Canvas canvas, final Paint paint,
                              final Projection projection,
-                             RichPoint from, RichPoint to) {
+                             final RichPoint from, final RichPoint to,
+                             final int paddingLeft, final int paddingTop,
+                             final int paddingRight, final int paddingBottom) {
         Point toScreenPoint = projection.toScreenLocation(to.getPosition());
         Point fromScreenPoint = projection.toScreenLocation(from.getPosition());
 
+        int fromX = fromScreenPoint.x + paddingRight / 2 - paddingLeft / 2;
+        int fromY = fromScreenPoint.y + paddingBottom / 2 - paddingTop / 2;
+        int toX = toScreenPoint.x + paddingRight / 2 - paddingLeft / 2;
+        int toY = toScreenPoint.y + paddingBottom / 2 - paddingTop / 2;
+
         if (linearGradient) {
             int[] colors = new int[]{from.getColor(), to.getColor()};
-            paint.setShader(new LinearGradient(fromScreenPoint.x, fromScreenPoint.y,
-                    toScreenPoint.x, toScreenPoint.y,
+            paint.setShader(new LinearGradient(fromX, fromY, toX, toY,
                     colors, null, Shader.TileMode.CLAMP));
         } else {
             paint.setColor(from.getColor());
@@ -107,9 +119,7 @@ public class RichPolyline extends RichShape {
             paint.setShader(strokeShader);
         }
 
-        canvas.drawLine(fromScreenPoint.x, fromScreenPoint.y,
-                toScreenPoint.x, toScreenPoint.y,
-                paint);
+        canvas.drawLine(fromX, fromY, toX, toY, paint);
     }
 
     protected Paint getDefaultStrokePaint() {

@@ -25,11 +25,11 @@ public class RichPoint {
     private LatLng position;
     private Integer color = null;
 
-    public RichPoint(LatLng position) {
+    public RichPoint(final LatLng position) {
         this.position = position;
     }
 
-    public RichPoint color(Integer color) {
+    public RichPoint color(final Integer color) {
         this.color = color;
         return this;
     }

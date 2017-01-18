@@ -48,18 +48,18 @@ public abstract class RichShape {
     protected boolean antialias = true;
     protected boolean closed = false;
 
-    RichShape(int zIndex,
-              List<RichPoint> points,
-              int strokeWidth,
-              Paint.Cap strokeCap,
-              Paint.Join strokeJoin,
-              PathEffect pathEffect,
-              MaskFilter maskFilter,
-              Shader strokeShader,
-              boolean linearGradient,
-              Integer strokeColor,
-              boolean antialias,
-              boolean closed) {
+    RichShape(final int zIndex,
+              final List<RichPoint> points,
+              final int strokeWidth,
+              final Paint.Cap strokeCap,
+              final Paint.Join strokeJoin,
+              final PathEffect pathEffect,
+              final MaskFilter maskFilter,
+              final Shader strokeShader,
+              final boolean linearGradient,
+              final Integer strokeColor,
+              final boolean antialias,
+              final boolean closed) {
         this.zIndex = zIndex;
         this.strokeWidth = strokeWidth;
         this.strokeCap = strokeCap;
@@ -78,7 +78,7 @@ public abstract class RichShape {
         }
     }
 
-    public RichShape add(RichPoint point) {
+    public RichShape add(final RichPoint point) {
         if (point != null) {
             if (point.getColor() == null) {
                 point.color(strokeColor);
@@ -106,19 +106,23 @@ public abstract class RichShape {
         return builder.build();
     }
 
-    protected abstract void doDraw(Bitmap bitmap, Projection projection);
+    protected abstract void doDraw(final Bitmap bitmap, final Projection projection,
+                                   final int paddingLeft, final int paddingTop,
+                                   final int paddingRight, final int paddingBottom);
 
-    public void draw(Bitmap bitmap, Projection projection) {
+    public void draw(final Bitmap bitmap, final Projection projection,
+                     final int paddingLeft, final int paddingTop,
+                     final int paddingRight, final int paddingBottom) {
         if (bitmap == null || projection == null) {
             throw new IllegalStateException("Bitmap and Projection cannot be null");
         }
 
         if (boundsIntersects(projection.getVisibleRegion().latLngBounds)) {
-            doDraw(bitmap, projection);
+            doDraw(bitmap, projection, paddingLeft, paddingTop, paddingRight, paddingBottom);
         }
     }
 
-    public boolean boundsIntersects(LatLngBounds test) {
+    public boolean boundsIntersects(final LatLngBounds test) {
         LatLngBounds bounds = getBounds();
         if (bounds == null || test == null) {
             return false;

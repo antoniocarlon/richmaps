@@ -46,18 +46,18 @@ public class RichPolygonOptions {
     private Paint.Style style = Paint.Style.FILL_AND_STROKE;
     private Integer fillColor = Color.WHITE;
 
-    public RichPolygonOptions(List<RichPoint> newPoints) {
+    public RichPolygonOptions(final List<RichPoint> newPoints) {
         add(newPoints);
     }
 
-    public RichPolygonOptions add(RichPoint newPoint) {
+    public RichPolygonOptions add(final RichPoint newPoint) {
         if (newPoint != null) {
             points.add(newPoint);
         }
         return this;
     }
 
-    public RichPolygonOptions add(List<RichPoint> newPoints) {
+    public RichPolygonOptions add(final List<RichPoint> newPoints) {
         if (newPoints != null) {
             for (RichPoint newPoint : newPoints) {
                 add(newPoint);
@@ -66,79 +66,79 @@ public class RichPolygonOptions {
         return this;
     }
 
-    public RichPolygonOptions addHole(List<RichPoint> newHole) {
+    public RichPolygonOptions addHole(final List<RichPoint> newHole) {
         if (newHole != null) {
             holes.add(newHole);
         }
         return this;
     }
 
-    public RichPolygonOptions zIndex(int zIndex) {
+    public RichPolygonOptions zIndex(final int zIndex) {
         this.zIndex = zIndex;
         return this;
     }
 
-    public RichPolygonOptions strokeWidth(int strokeWidth) {
+    public RichPolygonOptions strokeWidth(final int strokeWidth) {
         this.strokeWidth = strokeWidth;
         return this;
     }
 
-    public RichPolygonOptions strokeCap(Paint.Cap strokeCap) {
+    public RichPolygonOptions strokeCap(final Paint.Cap strokeCap) {
         this.strokeCap = strokeCap;
         return this;
     }
 
-    public RichPolygonOptions strokeJoin(Paint.Join strokeJoin) {
+    public RichPolygonOptions strokeJoin(final Paint.Join strokeJoin) {
         this.strokeJoin = strokeJoin;
         return this;
     }
 
-    public RichPolygonOptions pathEffect(PathEffect pathEffect) {
+    public RichPolygonOptions pathEffect(final PathEffect pathEffect) {
         this.pathEffect = pathEffect;
         return this;
     }
 
-    public RichPolygonOptions maskFilter(MaskFilter maskFilter) {
+    public RichPolygonOptions maskFilter(final MaskFilter maskFilter) {
         this.maskFilter = maskFilter;
         return this;
     }
 
-    public RichPolygonOptions linearGradient(boolean linearGradient) {
+    public RichPolygonOptions linearGradient(final boolean linearGradient) {
         this.linearGradient = linearGradient;
         return this;
     }
 
-    public RichPolygonOptions strokeColor(Integer strokeColor) {
+    public RichPolygonOptions strokeColor(final Integer strokeColor) {
         this.strokeColor = strokeColor;
         return this;
     }
 
-    public RichPolygonOptions antialias(boolean antialias) {
+    public RichPolygonOptions antialias(final boolean antialias) {
         this.antialias = antialias;
         return this;
     }
 
-    public RichPolygonOptions closed(boolean closed) {
+    public RichPolygonOptions closed(final boolean closed) {
         this.closed = closed;
         return this;
     }
 
-    public RichPolygonOptions strokeShader(Shader strokeShader) {
+    public RichPolygonOptions strokeShader(final Shader strokeShader) {
         this.strokeShader = strokeShader;
         return this;
     }
 
-    public RichPolygonOptions fillShader(Shader fillShader) {
+    public RichPolygonOptions fillShader(final Shader fillShader) {
         this.fillShader = fillShader;
         return this;
     }
 
-    public RichPolygonOptions style(Paint.Style style) {
+    public RichPolygonOptions style(final Paint.Style style) {
         this.style = style;
         return this;
     }
 
-    public RichPolygonOptions fillColor(Integer fillColor) {
+    public RichPolygonOptions fillColor(final Integer fillColor) {
         this.fillColor = fillColor;
         return this;
     }
